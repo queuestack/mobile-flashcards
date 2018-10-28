@@ -1,12 +1,9 @@
 import { AsyncStorage } from 'react-native'
 
-// MobileFlashcardsDeck
 let STORAGE_KEY = 'STORAGE_KEY'
 
-/* The deck itself is kept as an object of deck topics/subjects. */
-
-export function setUpDecks() {
-  let spanishDeck = {
+export function initDecks() {
+  const decks = {
     Korean: {
       title: 'Korean',
       questions: [
@@ -23,14 +20,14 @@ export function setUpDecks() {
       ]
     }
   }
-  return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify(spanishDeck))
+  return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify(decks))
 }
 
 export function getDecks() {
   return AsyncStorage.getItem(STORAGE_KEY)
 }
 
-export function saveDeckTitle(title) {
+export function addDeckTitle(title) {
   AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({
     [title]: {
       title: title,
