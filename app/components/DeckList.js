@@ -1,67 +1,70 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-import { getDecks } from '../utils/DeckAPI'
-import { connect } from 'react-redux'
-import { getDecksFromStorage } from '../store/actions'
-import { limeGreen, paleWhite } from '../utils/colors'
+import { 
+  StyleSheet, 
+  Text, 
+  View,
+  TouchableOpacity,
+  ScrollView
+} from 'react-native';
 
-class List extends Component {
-  componentDidMount() {
-		this.props.dispatch(getDecksFromStorage())
+class DeckList extends Component {
+  handleOnPress(key) {
+    const { navigation } = this.props
+    const { refreshDeck } = this.props.screenProps
+
+    navigation.navigate('Deck', { 
+      title: key,
+      refreshDeck: refreshDeck
+    })
   }
-
   render() {
+    const { decks } = this.props.screenProps
+
     return (
-      <View style={{flex: 1}}>
-        <FlatList
-          data={this.props.decks ? Object.keys(this.props.decks) : []}
-          keyExtractor={() => Math.random().toString(36).substr(2, 9)}
-          renderItem={({item}) => (
-            <View style={styles.deckStyle}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate(
-                'SingleDeck',
-                { entryId: {newTitle: item} })}
-                style={{flex: 1, flexWrap: 'wrap', flexDirection: 'column'}}>
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                  <Text style={styles.cardText}>{item}</Text>
-                </View>
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                  <Text style={styles.cardText}>{this.props.decks[item].questions.length} {this.props.decks[item].questions.length === 1 ? 'card' : 'cards'}</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      </View>
+      <ScrollView>
+        {
+          decks 
+            ? Object.keys(decks).map((key) => (
+              <View key={key} style={styles.bottomBorder}>
+                <TouchableOpacity 
+                  style={styles.deck} 
+                  onPress={() => this.handleOnPress(key)}>
+                    <Text style={styles.deckTitle}>
+                        {decks[key].title}
+                    </Text>
+                    <Text style={styles.cardNumber}>
+                      {
+                        decks[key].questions.length === 1
+                          ? decks[key].questions.length + ' card'
+                          : decks[key].questions.length + ' cards'
+                      }
+                    </Text>
+                </TouchableOpacity>
+              </View>
+            ))
+            : null
+        }
+      </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: limeGreen,
-    padding: 15,
+  deck: {
+    padding: 40
   },
-  deckStyle: {
-    flex: 1,
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: paleWhite,
-    padding: 15,
+  deckTitle: {
+    fontWeight: '900',
+    fontSize: 20,
+    textAlign: 'center'
   },
-  cardText: {
-    fontSize: 25,
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'center',
+  cardNumber: {
+    textAlign: 'center'
+  },
+  bottomBorder: {
+    borderBottomColor: 'black',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   }
 });
 
-function mapStateToProps (state) {
-  return {
-    decks: state.decks
-  }
-}
-
-export default connect(mapStateToProps)(List)
+export default DeckList
