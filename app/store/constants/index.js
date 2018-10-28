@@ -1,5 +1,0 @@
-export const ADD_DECK = 'ADD_DECK'
-export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK'
-export const GET_DECKS = 'GET_DECKS'
-export const SEND_DECK_TO_STORAGE = 'SEND_DECK_TO_STORAGE'
-export const SEND_CARD_TO_STORAGE = 'SEND_CARD_TO_STORAGE'
