@@ -1,15 +1,7 @@
 import React, { Component } from 'react'
-import { 
-  StyleSheet, 
-  Text, 
-  View,
-  TouchableOpacity,
-  Animated
-} from 'react-native'
-import { black, white } from './../utils/colors'
-import {
-  getDeck
-} from '../utils/helpers'
+import { Text, View, TouchableOpacity, Animated } from 'react-native'
+import { getDeck } from '../utils/api'
+import styles from './DeckStyles'
 
 class Deck extends Component {
   state = {
@@ -36,7 +28,7 @@ class Deck extends Component {
     //Navigate to the add card view
     navigation.navigate('AddCard', { 
       title: params.title,
-      refreshDeck: params.refreshDeck
+      updateDeck: params.updateDeck
     })
   }
   handleQuizPress() {
@@ -93,41 +85,5 @@ class Deck extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  deckTitle: {
-    fontWeight: '900',
-    textAlign: 'center',
-    marginBottom: 20
-  },
-  cardNumber: {
-    textAlign: 'center',
-    marginBottom: 40
-  },
-  buttonText: {
-    textAlign: 'center'
-  },
-  button: {
-    borderColor: black,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 10,
-    margin: 5,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 60,
-    paddingRight: 60
-  },
-  startQuizButton: {
-    backgroundColor: black
-  },
-  startQuizButtonText: {
-    color: white
-  }
-});
 
 export default Deck

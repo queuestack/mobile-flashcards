@@ -1,24 +1,10 @@
 import React, { Component } from 'react'
-import { 
-  StyleSheet, 
-  Text, 
-  View,
-  TouchableOpacity,
-  TextInput,
-  Platform
-} from 'react-native';
-import { 
-  black, 
-  white 
-} from '../utils/colors'
-import {
-  getDeck,
-  addCardToDeck
-} from '../utils/helpers'
-import { 
-  StackActions, 
-  NavigationActions 
-} from 'react-navigation';
+import { Text, View, TouchableOpacity, TextInput } from 'react-native';
+
+import { getDeck, addCardToDeck } from '../utils/api'
+import { StackActions, NavigationActions } from 'react-navigation';
+
+import styles from './AddCardStyles'
 
 class AddCard extends Component {
   state = {
@@ -27,45 +13,44 @@ class AddCard extends Component {
     deck: null
   }
   componentDidMount() {
-    const { params } = this.props.navigation.state;
+    const { title } = this.props.navigation.state.params;
 
-    //Set the deck
-    getDeck(params.title)
+    getDeck(title)
       .then((deck) => {
         this.setState({
           deck: deck
         })
       })
   }
+
   handleSubmit() {
     const { question, answer, deck } = this.state
     const { navigation } = this.props
     const { params } = this.props.navigation.state;
 
-    //If either question or answer are empty, stop
     if (question.length === 0 || answer.length === 0) {
       return
     }
 
-    //Add the card to the deck
-    addCardToDeck(deck.title, { question: question, answer: answer })
+    addCardToDeck(
+        deck.title, 
+        { question, answer }
+    )
       .then(() => {
-        //Reset the question and answer field
         this.setState({
           question: '',
           answer: ''
         })
 
-        //Refresh the list of decks
-        params.refreshDeck()
+        params.updateDeck()
 
-        //Return to the deck view
         navigation.dispatch(StackActions.reset({
           index: 0,
           actions: [NavigationActions.navigate({ routeName: 'Home' })]
         }))
       })
   }
+
   render() {
 
     const { deck } = this.state
@@ -82,7 +67,7 @@ class AddCard extends Component {
           <TextInput 
             onChangeText={(questionText) => this.setState({ question: questionText })}
             value={this.state.question}
-            style={ Platform.OS === 'ios' ? styles.textInputIOS : styles.textInputAndroid } />
+            style={styles.textInput} />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.text}>
@@ -93,7 +78,7 @@ class AddCard extends Component {
           <TextInput 
             onChangeText={(answerText) => this.setState({ answer: answerText })}
             value={this.state.answer}
-            style={ Platform.OS === 'ios' ? styles.textInputIOS : styles.textInputAndroid } />
+            style={styles.textInput} />
         </View>
         <View>
           <TouchableOpacity 
@@ -107,49 +92,5 @@ class AddCard extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  text: {
-    fontWeight: '900',
-    fontSize: 40
-  },
-  button: {
-    borderColor: black,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 10,
-    margin: 5,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 60,
-    paddingRight: 60
-  },
-  blackButton: {
-    backgroundColor: black
-  },
-  whiteText: {
-    color: white
-  },
-  textInputContainer: {
-    borderColor: black,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 5,
-    margin: 20,
-    padding: 5,
-    flexDirection: 'row'
-  },
-  textInputIOS: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: black,
-    flex: 1
-  },
-  textInputAndroid: {
-    flex: 1,
-  }
-})
 
 export default AddCard

@@ -1,58 +1,10 @@
 import { AsyncStorage } from 'react-native'
-import {
-  Notifications,
-  Permissions
-} from 'expo'
+import { Notifications, Permissions } from 'expo'
 
-const DECKS_KEY = 'MobileNotifications:decks'
-
-export function addCardToDeck( title, card ) {
-  return AsyncStorage.getItem(DECKS_KEY)
-    .then(JSON.parse)
-    .then((data) => {
-      //Add the card to the deck
-      data[title].questions.push(card)
-
-      //Save the deck
-      AsyncStorage.setItem(DECKS_KEY, JSON.stringify(data))
-    })
-}
-
-export function saveDeckTitle( title ) {
-  return AsyncStorage.getItem(DECKS_KEY)
-    .then(JSON.parse)
-    .then((data) => {
-      //Create an object if this is the first deck
-      if (!data) { data = {} }
-
-      //Create the deck
-      data[title] = { title: title, questions: [] }
-
-      //Save the updated deck
-      return AsyncStorage.setItem(DECKS_KEY, JSON.stringify(data))
-    })
-}
-
-export function getDeck(id) {
-  return AsyncStorage.getItem(DECKS_KEY)
-    .then(JSON.parse)
-    .then((data) => {
-      return data[id]
-    })
-}
-
-export function getDecks () {
-  return AsyncStorage.getItem(DECKS_KEY)
-    .then(JSON.parse)
-    .then((data) => {
-      return data
-    })
-}
-
-const NOTIFICATIONS_KEY = 'MobileFlashcards:notifications'
+const NOTI_KEY = 'NOTI_KEY'
 
 export function setNotification() {
-  AsyncStorage.getItem(NOTIFICATIONS_KEY)
+  AsyncStorage.getItem(NOTI_KEY)
     .then(JSON.parse)
     .then((data) => {
       if (data === null) {
@@ -77,7 +29,7 @@ export function setNotification() {
                 }
               )
 
-              AsyncStorage.setItem(NOTIFICATIONS_KEY, JSON.stringify(true))
+              AsyncStorage.setItem(NOTI_KEY, JSON.stringify(true))
             }
           })
       }
@@ -101,6 +53,6 @@ function createNotification() {
 }
 
 export function clearNotification() {
-  return AsyncStorage.removeItem(NOTIFICATIONS_KEY)
+  return AsyncStorage.removeItem(NOTI_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync())
 }

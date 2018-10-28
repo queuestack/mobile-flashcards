@@ -1,28 +1,27 @@
 import React from 'react';
-import { setNotification, getDecks } from './app/utils/helpers'
+import { getDecks } from './app/utils/api'
+import { setNotification } from './app/utils/helpers'
 import MainNavigator from './app/components/Navigators'
 
 class App extends React.Component {
   state = {
-    decks: []
+    decks: null
   }
   componentDidMount() {
     setNotification()
-    this.refresh()
+    this.updateDeck()
   }
-  refresh() {
+  updateDeck() {
     getDecks()
       .then((decks) => {
-        this.setState({
-          decks: decks
-        })
+        this.setState({ decks })
       })
   }
   render() {
     return (
       <MainNavigator screenProps={{
         decks: this.state.decks,
-        refreshDeck: () => this.refresh()
+        updateDeck: () => this.updateDeck()
       }}/>
     );
   }

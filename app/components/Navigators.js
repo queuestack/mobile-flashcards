@@ -1,4 +1,4 @@
-import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation'
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 
 import DeckList from './DeckList'
 import NewDeck from './NewDeck'
@@ -7,7 +7,7 @@ import AddCard from './AddCard'
 import Quiz from './Quiz'
 import { white, black } from '../utils/colors'
 
-const Tabs = createMaterialTopTabNavigator({
+const Tabs = createBottomTabNavigator({
     'Decks': { 
       screen: DeckList
     },

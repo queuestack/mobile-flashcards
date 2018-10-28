@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
-import { 
-  StyleSheet, 
-  Text, 
-  View,
-  TouchableOpacity,
-  ScrollView
-} from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
+
+import styles from './DeckListStyles'
 
 class DeckList extends Component {
   handleOnPress(key) {
     const { navigation } = this.props
-    const { refreshDeck } = this.props.screenProps
+    const { updateDeck } = this.props.screenProps
 
     navigation.navigate('Deck', { 
       title: key,
-      refreshDeck: refreshDeck
+      updateDeck: updateDeck
     })
   }
   render() {
@@ -48,23 +44,5 @@ class DeckList extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  deck: {
-    padding: 40
-  },
-  deckTitle: {
-    fontWeight: '900',
-    fontSize: 20,
-    textAlign: 'center'
-  },
-  cardNumber: {
-    textAlign: 'center'
-  },
-  bottomBorder: {
-    borderBottomColor: 'black',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  }
-});
 
 export default DeckList
