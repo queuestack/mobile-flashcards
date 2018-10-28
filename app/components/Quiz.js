@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 
-import { clearNotification, getDeck } from '../utils/api'
+import { getDeck } from '../utils/api'
+import { clearNotification } from '../utils/helpers'
+
+import styles from './QuizStyles'
 
 class Quiz extends Component {
   componentDidMount() {
@@ -106,28 +109,28 @@ class Quiz extends Component {
                       <View style={styles.answerButtonContainer}>
                         <TouchableOpacity
                           onPress={() => this.setState({ showQuestion: false })}>
-                          <Text style={styles.answerButton}>Answer</Text>
+                          <Text style={styles.answerButton}>Show Answer</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
                   : <View style={styles.questionButtonContainer}>
                       <TouchableOpacity
                         onPress={() => this.setState({ showQuestion: true })}>
-                        <Text style={styles.questionButton}>Question</Text>
+                        <Text style={styles.questionButton}>Show Question</Text>
                       </TouchableOpacity>
                   </View>
                 }
                 <View>
                   <TouchableOpacity 
-                    style={[styles.button,styles.greenButton]}
+                    style={[styles.button,styles.blueButton]}
                     onPress={() => this.handlePressCorrect()}>
-                    <Text style={styles.whiteText}>Correct</Text>
+                    <Text style={styles.whiteText}> Correct </Text>
                   </TouchableOpacity>
                 </View>
                 <View>
                   <TouchableOpacity 
-                  style={[styles.button,styles.redButton]}
-                  onPress={() => this.handlePressIncorrect()}>
+                    style={[styles.button,styles.redButton]}
+                    onPress={() => this.handlePressIncorrect()}>
                     <Text style={styles.whiteText}>Incorrect</Text>
                   </TouchableOpacity>
                 </View>

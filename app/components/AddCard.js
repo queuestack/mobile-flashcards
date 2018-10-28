@@ -18,7 +18,7 @@ class AddCard extends Component {
     getDeck(title)
       .then((deck) => {
         this.setState({
-          deck: deck
+          deck
         })
       })
   }
@@ -66,6 +66,7 @@ class AddCard extends Component {
         <View style={styles.textInputContainer}>
           <TextInput 
             onChangeText={(questionText) => this.setState({ question: questionText })}
+            placeholder="Type question"
             value={this.state.question}
             style={styles.textInput} />
         </View>
@@ -77,6 +78,7 @@ class AddCard extends Component {
         <View style={styles.textInputContainer}>
           <TextInput 
             onChangeText={(answerText) => this.setState({ answer: answerText })}
+            placeholder="Type answer"
             value={this.state.answer}
             style={styles.textInput} />
         </View>

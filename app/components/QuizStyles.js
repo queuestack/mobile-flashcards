@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native'
-import { red, green, white, black } from '../utils/colors'
+import { red, green, white, black, blue } from '../utils/colors'
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+		flex: 1
   },
   resultsContainer: {
     alignItems: 'center',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   questionButton: {
     fontWeight: '900',
-    color: red
+    color: blue
   },
   answerButtonContainer: {
     marginBottom: 50,
@@ -57,11 +57,11 @@ const styles = StyleSheet.create({
     paddingLeft: 60,
     paddingRight: 60
   },
-  greenButton: {
-    backgroundColor: green
+  blueButton: {
+		backgroundColor: blue
   },
   redButton: {
-    backgroundColor: red
+		backgroundColor: red
   },
   blackButton: {
     backgroundColor: black

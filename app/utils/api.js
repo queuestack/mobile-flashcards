@@ -5,42 +5,38 @@ const DECKS_KEY = 'DECKS_KEY'
 export function addCardToDeck( title, card ) {
     return AsyncStorage.getItem(DECKS_KEY)
       .then(JSON.parse)
-      .then((data) => {
-        //Add the card to the deck
-        data[title].questions.push(card)
+      .then((decks) => {
+        
+        decks[title].questions.push(card)
   
-        //Save the deck
-        AsyncStorage.setItem(DECKS_KEY, JSON.stringify(data))
+        AsyncStorage.setItem(DECKS_KEY, JSON.stringify(decks))
       })
   }
   
   export function saveDeckTitle( title ) {
     return AsyncStorage.getItem(DECKS_KEY)
       .then(JSON.parse)
-      .then((data) => {
-        //Create an object if this is the first deck
-        if (!data) { data = {} }
+      .then((decks) => {
+        if (!decks) { decks = {} }
   
-        //Create the deck
-        data[title] = { title: title, questions: [] }
+        decks[title] = { title: title, questions: [] }
   
-        //Save the updated deck
-        return AsyncStorage.setItem(DECKS_KEY, JSON.stringify(data))
+        return AsyncStorage.setItem(DECKS_KEY, JSON.stringify(decks))
       })
   }
   
-  export function getDeck(id) {
+  export function getDeck( title ) {
     return AsyncStorage.getItem(DECKS_KEY)
       .then(JSON.parse)
-      .then((data) => {
-        return data[id]
+      .then((decks) => {
+        return decks[title]
       })
   }
   
   export function getDecks () {
     return AsyncStorage.getItem(DECKS_KEY)
       .then(JSON.parse)
-      .then((data) => {
-        return data
+      .then((decks) => {
+        return decks
       })
   }

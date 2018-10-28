@@ -3,6 +3,22 @@ import { Notifications, Permissions } from 'expo'
 
 const NOTI_KEY = 'NOTI_KEY'
 
+function createNotification() {
+	return {
+		title: 'Time to do flash cards',
+		body: 'It is time to study!',
+		ios: {
+			sound: true
+		},
+		android: {
+			sound: true,
+			priority: 'high',
+			sticky: false,
+			vibrate: true
+		}
+	}
+}
+
 export function setNotification() {
   AsyncStorage.getItem(NOTI_KEY)
     .then(JSON.parse)
@@ -34,22 +50,6 @@ export function setNotification() {
           })
       }
     })
-}
-
-function createNotification() {
-  return {
-    title: 'Study your flash cards',
-    body: 'Don\'t forget to study today',
-    ios: {
-      sound: true
-    },
-    android: {
-      sound: true,
-      priority: 'high',
-      sticky: false,
-      vibrate: true
-    }
-  }
 }
 
 export function clearNotification() {

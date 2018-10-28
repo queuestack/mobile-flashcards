@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { black } from '../utils/colors'
 
 const styles = StyleSheet.create({
 	deck: {
@@ -13,7 +14,8 @@ const styles = StyleSheet.create({
 		textAlign: 'center'
 	},
 	bottomBorder: {
-		borderBottomColor: 'black',
+		borderBottomColor: black,
+		borderBottomWidth: 1		
 	}
 });
 
