@@ -8,7 +8,7 @@ class NewDeck extends Component {
   state = {
     deckTitle: ''
   }
-  handleOnPress() {
+  handleOnPress = () => {
     const { deckTitle } = this.state
     const { navigation } = this.props
     const { updateDeck } = this.props.screenProps 
@@ -21,9 +21,9 @@ class NewDeck extends Component {
       .then(() => {
         updateDeck()
 
-        navigation.navigate('Home', { 
+        navigation.navigate('Deck', { 
           title: deckTitle,
-          updateDeck: updateDeck
+          updateDeck
          })
 
         this.setState({ 
