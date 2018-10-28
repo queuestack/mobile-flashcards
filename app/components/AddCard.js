@@ -22,27 +22,33 @@ class AddCard extends Component {
         })
       })
   }
-
-  handleSubmit() {
+  handleQuestionText = (question) => {
+    this.setState({
+      question
+    })
+  }
+  handleAnswerText = (answer) => {
+    this.setState({
+      answer
+    })
+  }
+  handleSubmit = () => {
     const { question, answer, deck } = this.state
     const { navigation } = this.props
-    const { params } = this.props.navigation.state;
+    const { updateDeck } = this.props.navigation.state.params;
 
     if (question.length === 0 || answer.length === 0) {
       return
     }
-
-    addCardToDeck(
-        deck.title, 
-        { question, answer }
-    )
+    const card = { question, answer }
+    addCardToDeck(deck.title, card)
       .then(() => {
         this.setState({
           question: '',
           answer: ''
         })
 
-        params.updateDeck()
+        updateDeck()
 
         navigation.dispatch(StackActions.reset({
           index: 0,
@@ -50,14 +56,9 @@ class AddCard extends Component {
         }))
       })
   }
-
-  render() {
-
-    const { deck } = this.state
-
+  renderAddCard() {
     return (
-      deck
-      ? <View style={styles.container}>
+      <View style={styles.container}>
         <View>
           <Text style={styles.text}>
             Question
@@ -65,7 +66,7 @@ class AddCard extends Component {
         </View>
         <View style={styles.textInputContainer}>
           <TextInput 
-            onChangeText={(questionText) => this.setState({ question: questionText })}
+            onChangeText={this.handleQuestionText}
             placeholder="Type question"
             value={this.state.question}
             style={styles.textInput} />
@@ -77,7 +78,7 @@ class AddCard extends Component {
         </View>
         <View style={styles.textInputContainer}>
           <TextInput 
-            onChangeText={(answerText) => this.setState({ answer: answerText })}
+            onChangeText={this.handleAnswerText}
             placeholder="Type answer"
             value={this.state.answer}
             style={styles.textInput} />
@@ -85,12 +86,20 @@ class AddCard extends Component {
         <View>
           <TouchableOpacity 
             style={[styles.button, styles.blackButton]}
-            onPress={() => this.handleSubmit()}>
-            <Text style={styles.whiteText}>Submit</Text>
+            onPress={this.handleSubmit}>
+            <Text style={styles.submitText}>Submit</Text>
           </TouchableOpacity>
         </View>
-      </View>
-      : null
+      </View>      
+    )  
+  }
+  render() {
+    const { deck } = this.state
+
+    return (
+      deck
+      ? this.renderAddCard()
+      : <View />
     )
   }
 }

@@ -5,7 +5,7 @@ import NewDeck from './NewDeck'
 import Deck from './Deck'
 import AddCard from './AddCard'
 import Quiz from './Quiz'
-import { white, black } from '../utils/colors'
+import { white, black, blue } from '../utils/colors'
 
 const Tabs = createBottomTabNavigator({
     'Decks': { 
@@ -20,6 +20,17 @@ const MainNavigator = createStackNavigator({
     Home: {
       screen: Tabs
     },
+    AddCard: {
+      screen: AddCard,
+      navigationOptions: {
+        headerTintColor: white,
+        headerLeftTintColor: white,
+        title: 'Add Card',
+        headerStyle: {
+          backgroundColor: blue
+        }
+      }
+    },    
     Deck: {
       screen: Deck,
       navigationOptions: {
@@ -27,18 +38,7 @@ const MainNavigator = createStackNavigator({
         headerLeftTintColor: white,
         title: 'Deck',
         headerStyle: {
-          backgroundColor: black
-        }
-      }
-    },
-    AddCard: {
-      screen: AddCard,
-      navigationOptions: {
-        headerTintColor: white,
-        headerLeftTintColor: white,
-        title: `Add Card`,
-        headerStyle: {
-          backgroundColor: black
+          backgroundColor: blue
         }
       }
     },
@@ -47,9 +47,9 @@ const MainNavigator = createStackNavigator({
       navigationOptions: {
         headerTintColor: white,
         headerLeftTintColor: white,
-        title: `Quiz`,
+        title: 'Quiz',
         headerStyle: {
-          backgroundColor: black
+          backgroundColor: blue
         }
       }
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableOpacity, TextInput, Platform } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { saveDeckTitle } from '../utils/api'
 
 import styles from './NewDeckStyles'
@@ -10,26 +10,22 @@ class NewDeck extends Component {
   }
   handleOnPress() {
     const { deckTitle } = this.state
-    const { dispatch, navigation } = this.props
+    const { navigation } = this.props
     const { updateDeck } = this.props.screenProps 
 
     if (deckTitle.length == 0) {
       return;
     }
 
-    //Create the new deck
     saveDeckTitle( deckTitle )
       .then(() => {
-        //Refresh the decks
         updateDeck()
 
-        //Navigate to the deck screen
-        navigation.navigate('Deck', { 
+        navigation.navigate('Home', { 
           title: deckTitle,
           updateDeck: updateDeck
          })
 
-        //Reset the state
         this.setState({ 
           deckTitle: ''
         })

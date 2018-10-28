@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 	blackButton: {
 		backgroundColor: black
 	},
-	whiteText: {
+	submitText: {
 		color: white
 	},
 	textInputContainer: {

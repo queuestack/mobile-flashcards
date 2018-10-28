@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 
 import styles from './DeckListStyles'
+import { FlatList } from 'react-native-gesture-handler';
 
 class DeckList extends Component {
   handleOnPress(key) {
@@ -13,34 +14,42 @@ class DeckList extends Component {
       updateDeck: updateDeck
     })
   }
+  renderDeck = ({item}) => {
+    const { decks } = this.props.screenProps
+    const key = item
+    const nCards = decks[key].cards.length
+    const deckTitle = decks[key].title
+    const deckSize = nCards > 1 ? nCards + ' cards' : nCards + ' card'
+    
+    
+
+    return (
+      <View key={key} style={styles.bottomBorder}>
+        <TouchableOpacity 
+          style={styles.deck} 
+          onPress={() => this.handleOnPress(key)}>
+          <Text style={styles.deckTitle}>
+            { deckTitle }
+          </Text>
+          <Text style={styles.cardNumber}>
+            { deckSize }
+          </Text>
+        </TouchableOpacity>
+      </View>  
+    )
+  }
   render() {
     const { decks } = this.props.screenProps
 
     return (
-      <ScrollView>
-        {
-          decks 
-            ? Object.keys(decks).map((key) => (
-              <View key={key} style={styles.bottomBorder}>
-                <TouchableOpacity 
-                  style={styles.deck} 
-                  onPress={() => this.handleOnPress(key)}>
-                    <Text style={styles.deckTitle}>
-                        {decks[key].title}
-                    </Text>
-                    <Text style={styles.cardNumber}>
-                      {
-                        decks[key].questions.length === 1
-                          ? decks[key].questions.length + ' card'
-                          : decks[key].questions.length + ' cards'
-                      }
-                    </Text>
-                </TouchableOpacity>
-              </View>
-            ))
-            : null
-        }
-      </ScrollView>
+      decks 
+        ? 
+          <FlatList
+            data={Object.keys(decks)}
+            renderItem={this.renderDeck}
+            keyExtractor={(item, index) => index.toString()}
+          />        
+        : null
     )
   }
 }
